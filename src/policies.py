@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from collections import deque
+from collections import deque, OrderedDict
 
 class BaseCache(ABC):
 
@@ -33,3 +33,23 @@ class FIFOCache(BaseCache):
             return False
         else:
             return True
+        
+        
+class LRUCache(BaseCache):
+    def  __init__(self, k:int):
+        super().__init__(k)
+        self.cache = OrderedDict()
+        
+    def get(self, id:int) ->bool:
+        #if id in cache, move to end (most recent)
+        if id in self.cache:
+            self.cache.move_to_end(id)
+            return True
+        self.misses +=1
+        
+        #if cache is at max capacity, removes least recent used (at front) 
+        if len(self.cache) >= self.k:
+            self.cache.popitem(last = False)
+        
+        self.cache[id] = None
+        return False
