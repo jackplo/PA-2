@@ -38,20 +38,22 @@ class FIFOCache(BaseCache):
 class LRUCache(BaseCache):
     def  __init__(self, k:int):
         super().__init__(k)
-        self.cache = OrderedDict()
+        self.cache = []
+        self.uniques: set[int] = set()
         
     def get(self, id:int) ->bool:
-        #if id in cache, move to end (most recent)
-        if id in self.cache:
-            self.cache.move_to_end(id)
+        if id in self.uniques:
+            self.cache.remove(id)
+            self.cache.insert(0,id)
             return True
-        self.misses +=1
+        self.misses += 1
         
-        #if cache is at max capacity, removes least recent used (at front) 
         if len(self.cache) >= self.k:
-            self.cache.popitem(last = False)
-        
-        self.cache[id] = None
+            removed = self.cache.pop()
+            self.uniques.remove(removed)
+            
+        self.cache.insert(0,id)
+        self.uniques.add(id)
         return False
 
 class OPTFFCache(BaseCache):
