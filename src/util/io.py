@@ -10,3 +10,11 @@ def read_input_file(file_name: str) -> tuple[int, int, list[int]]:
 
     return (k, m, rm)
     
+def write_to_file(file_name: str, miss_counts: tuple[int,int,int]):
+    fifo, lru, optff = miss_counts
+    with open(file_name, "w") as file:
+        file.write(f"FIFO   : {fifo}\n")
+        file.write(f"LRU    : {lru}\n")
+        file.write(f"OPTFF  : {optff}\n")
+        
+        
