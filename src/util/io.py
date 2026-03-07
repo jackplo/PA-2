@@ -1,4 +1,6 @@
-def read_input_file(file_name: str) -> tuple[int, int, list[int]]:
+from pathlib import Path
+
+def read_input_file(file_name: Path) -> tuple[int, int, list[int]]:
     with open(file_name, 'r') as file:
         km = file.readline().strip()
         

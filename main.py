@@ -2,6 +2,7 @@ from src.util.io import read_input_file, write_to_file
 from src.policies import BaseCache, LRUCache, FIFOCache, OPTFFCache
 import sys
 from pathlib import Path
+
 def main():
     if len(sys.argv) != 2:
         return
